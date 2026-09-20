@@ -451,6 +451,85 @@ transform: translateY(-180px) scale(1.4) rotate(25deg);
 opacity: 0;
 }
 }
+    /* =========================
+PROPUESTA + INFINITO
+========================= */
+
+.proposal {
+margin: 50px auto 30px;
+padding: 25px 20px;
+max-width: 500px;
+background: rgba(255, 255, 255, 0.75);
+border: 3px solid #ffb6d1;
+border-radius: 30px;
+box-shadow: 0 10px 25px rgba(220, 80, 140, 0.2);
+text-align: center;
+}
+
+.infinity {
+font-size: 55px;
+color: #ed408e;
+margin: 10px 0;
+text-shadow: 0 0 15px #ff9ac4;
+animation: latido 2s infinite;
+}
+
+.proposal-text {
+font-family: cursive;
+font-size: 26px;
+color: #c74780;
+margin: 15px 0;
+}
+
+.proposal-btn {
+border: none;
+border-radius: 50px;
+padding: 16px 30px;
+margin-top: 10px;
+font-family: cursive;
+font-size: 22px;
+color: white;
+background: linear-gradient(135deg, #ff4f9b, #ff9c55);
+box-shadow: 0 8px 20px rgba(235, 72, 139, 0.35);
+cursor: pointer;
+transition: 0.3s;
+}
+
+.proposal-btn:hover {
+transform: scale(1.06);
+}
+
+/* Globitos de texto */
+.bubble {
+position: fixed;
+pointer-events: none;
+z-index: 9999;
+background: #fff0f7;
+color: #d83f88;
+font-family: cursive;
+font-size: 20px;
+padding: 12px 20px;
+border-radius: 25px;
+border: 2px solid #ff9ac4;
+box-shadow: 0 6px 15px rgba(220, 80, 140, 0.25);
+animation: subirBurbuja 2s ease-out forwards;
+white-space: nowrap;
+}
+
+@keyframes subirBurbuja {
+0% {
+transform: translateY(0) scale(0.6);
+opacity: 0;
+}
+20% {
+opacity: 1;
+transform: translateY(-20px) scale(1);
+}
+100% {
+transform: translateY(-220px) scale(1.1);
+opacity: 0;
+}
+}
 </style>
 </head>
 
@@ -633,7 +712,21 @@ opacity: 0;
         </div>
     </div>
 
+<!-- =========================
+PROPUESTA
+========================= -->
 
+<div class="proposal">
+<div class="infinity">∞</div>
+
+<div class="proposal-text">
+¿Cuándo nos casamos? 💍
+</div>
+
+<button class="proposal-btn" onclick="mostrarBurbujas()">
+Toca aquí 💗
+</button>
+</div>
 
     <!-- =========================
          FINAL
@@ -787,6 +880,36 @@ setTimeout(() => {
 emoji.remove();
 }, 1400);
 });
+    /* =========================
+BURBUJAS DE AMOR
+========================= */
+
+const frasesAmor = [
+"Te Amodoroooooo 💗",
+"Mu Mu 😽",
+"Te Amodoroooooo 💕",
+"Mu Mu 😽",
+"Te super amodoro muchísimo 🌻",
+"Siempre Tuya :3"
+];
+
+function mostrarBurbujas() {
+for (let i = 0; i < 8; i++) {
+setTimeout(() => {
+const burbuja = document.createElement("div");
+burbuja.className = "bubble";
+burbuja.textContent = frasesAmor[Math.floor(Math.random() * frasesAmor.length)];
+
+// Posición aleatoria en la pantalla
+burbuja.style.left = (20 + Math.random() * 60) + "vw";
+burbuja.style.top = (50 + Math.random() * 30) + "vh";
+
+document.body.appendChild(burbuja);
+
+setTimeout(() => burbuja.remove(), 2000);
+}, i * 150);
+}
+}
 </script>
 
 </body>
