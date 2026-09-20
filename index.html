@@ -590,7 +590,7 @@ opacity: 0;
     <!-- BOTÓN MÚSICA -->
     <br>
     <button class="button" onclick="toggleMusic()" id="musicButton">
-        🎵 Reproducir nuestra canción
+        🎵 Music Sounds Better With You (˶ᵔ ᵕ ᵔ˶)
     </button>
 
     <!-- Audio (se elige la canción al azar al cargar) -->
@@ -807,10 +807,10 @@ console.log("Canción de esta visita:", cancionAleatoria);
 function toggleMusic() {
     if (music.paused) {
         music.play();
-        musicButton.textContent = "⏸️ Pausar nuestra canción";
+        musicButton.textContent = "⏸️ Pausita >⩊<";
     } else {
         music.pause();
-        musicButton.textContent = "🎵 Reproducir nuestra canción";
+        musicButton.textContent = "🎵 Music Sounds Better With You (˶ᵔ ᵕ ᵔ˶)";
     }
 }
 
@@ -852,7 +852,7 @@ function celebrar() {
     // Si la música está pausada, la reproduce
     if (music.paused) {
         music.play().catch(() => {});
-        musicButton.textContent = "⏸️ Pausar nuestra canción";
+        musicButton.textContent = "⏸️ Pausita >⩊<";
     }
 }
 /* =========================
