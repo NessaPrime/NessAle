@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TeAmodoro 💗</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    font-family: "Trebuchet MS", Arial, sans-serif;
+
+    color: #d83f88;
+
+    background:
+        radial-gradient(circle at 15% 10%, #fff4a8, transparent 25%),
+        radial-gradient(circle at 85% 15%, #ffd0e3, transparent 30%),
+        linear-gradient(135deg, #ffd2e4, #fff0aa);
+}
+
+
+/* =========================
+   FONDO
+========================= */
+
+.background {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+
+/* =========================
+   OPTIMUS Y MEGATRON
+========================= */
+
+.robot {
+    position: fixed;
+    width: 150px;
+    opacity: .88;
+    pointer-events: none;
+    z-index: 1;
+    filter: drop-shadow(0 8px 12px rgba(120,70,100,.25));
+    animation: robotFloat 5s ease-in-out infinite;
+}
+
+.optimus1 {
+    left: -20px;
+    top: 90px;
+}
+
+.optimus2 {
+    right: -25px;
+    bottom: 100px;
+    animation-delay: 2s;
+}
+
+.megatron1 {
+    right: -20px;
+    top: 100px;
+    animation-delay: 1s;
+}
+
+.megatron2 {
+    left: -25px;
+    bottom: 120px;
+    animation-delay: 3s;
+}
+
+@keyframes robotFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(-2deg);
+    }
+    50% {
+        transform: translateY(-18px) rotate(2deg);
+    }
+}
+
+
+/* =========================
+   CORAZONES Y GIRASOLES
+========================= */
+
+.floating {
+    position: absolute;
+    bottom: -100px;
+    animation: subir 11s linear infinite;
+    opacity: .85;
+}
+
+@keyframes subir {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    15% {
+        opacity: .9;
+    }
+    85% {
+        opacity: .9;
+    }
+    100% {
+        transform: translateY(-120vh) rotate(30deg);
+        opacity: 0;
+    }
+}
+
+
+/* =========================
+   CONTENEDOR
+========================= */
+
+.container {
+    position: relative;
+    z-index: 3;
+    max-width: 760px;
+    margin: auto;
+    padding: 45px 18px 80px;
+    text-align: center;
+}
+
+
+/* =========================
+   CORAZÓN
+========================= */
+
+.main-heart {
+    font-size: 105px;
+    animation: latido 1.5s infinite;
+    filter: drop-shadow(0 8px 15px #ff82b5);
+}
+
+@keyframes latido {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.12);
+    }
+}
+
+
+/* =========================
+   TÍTULO
+========================= */
+
+.title {
+    font-family: cursive;
+    font-size: clamp(48px, 11vw, 75px);
+    color: #ed408e;
+    margin: 5px 0;
+    text-shadow: 2px 2px white, 0 0 15px #ff9ac4;
+}
+
+.subtitle {
+    font-family: cursive;
+    font-size: 25px;
+    color: #c74780;
+}
+
+
+/* =========================
+   LÍNEA
+========================= */
+
+.line {
+    width: 80%;
+    height: 3px;
+    margin: 30px auto;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #ff70a9,
+        #ffd94f,
+        #ff70a9,
+        transparent
+    );
+}
+
+
+/* =========================
+   BOTONES
+========================= */
+
+.button {
+    border: none;
+    border-radius: 50px;
+    padding: 17px 32px;
+    margin: 8px;
+    font-family: cursive;
+    font-size: 25px;
+    color: white;
+    background: linear-gradient(135deg, #ff4f9b, #ff9c55);
+    box-shadow: 0 8px 25px rgba(235,72,139,.35);
+    cursor: pointer;
+    transition: .3s;
+}
+
+.button:hover {
+    transform: scale(1.06);
+}
+
+.button:active {
+    transform: scale(.95);
+}
+
+
+/* =========================
+   CONTADOR
+========================= */
+
+.counter {
+    margin: 35px auto;
+    padding: 25px 15px;
+    max-width: 680px;
+    background: rgba(255,255,255,.78);
+    border: 3px solid #ffb6d1;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(220,80,140,.18);
+}
+
+.counter-title {
+    font-family: cursive;
+    font-size: 29px;
+    margin-bottom: 20px;
+}
+
+.counter-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+}
+
+.time-box {
+    background: #fff9fc;
+    border-radius: 18px;
+    padding: 15px 5px;
+    border: 2px solid #ffd1e1;
+}
+
+.number {
+    display: block;
+    font-size: 31px;
+    font-weight: bold;
+    color: #dc4389;
+}
+
+.label {
+    font-size: 14px;
+    color: #b96b8c;
+}
+
+
+/* =========================
+   CARTA (lista para texto largo)
+========================= */
+
+.letter {
+    margin-top: 40px;
+    padding: 30px 25px;
+    text-align: left;
+    line-height: 1.85;
+    font-size: 18px;
+    background: rgba(255,255,255,.82);
+    border: 3px solid #ffc1d8;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(217,78,139,.15);
+}
+
+.letter h2 {
+    text-align: center;
+    font-family: cursive;
+    font-size: 34px;
+    color: #df438b;
+    margin-top: 0;
+}
+
+.letter p {
+    margin-bottom: 1.1em;
+}
+
+.signature {
+    text-align: right;
+    font-family: cursive;
+    font-size: 27px;
+    margin-top: 25px;
+}
+
+
+/* =========================
+   GALERÍA DE 11 FOTOS
+========================= */
+
+.gallery {
+    margin-top: 55px;
+}
+
+.gallery h2 {
+    font-family: cursive;
+    font-size: 38px;
+    margin-bottom: 5px;
+}
+
+.photos {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.photo {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 22px;
+    border: 4px solid white;
+    background: linear-gradient(135deg, #ffe0ec, #fff2b1);
+    box-shadow: 0 7px 18px rgba(220,80,140,.2);
+}
+
+.photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .3s;
+}
+
+.photo img:hover {
+    transform: scale(1.06);
+}
+
+
+/* =========================
+   MENSAJE FINAL
+========================= */
+
+.message {
+    margin-top: 45px;
+    padding: 25px;
+    border-radius: 30px;
+    background: rgba(255,255,255,.7);
+    font-family: cursive;
+    font-size: 26px;
+}
+
+.footer {
+    margin-top: 45px;
+    font-family: cursive;
+    font-size: 23px;
+}
+
+
+/* =========================
+   CELEBRACIÓN
+========================= */
+
+.celebration {
+    position: fixed;
+    pointer-events: none;
+    z-index: 999;
+    font-size: 30px;
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media(max-width:550px) {
+
+    .robot {
+        width: 95px;
+    }
+
+    .optimus1 {
+        left: -25px;
+        top: 100px;
+    }
+
+    .megatron1 {
+        right: -25px;
+        top: 110px;
+    }
+
+    .optimus2 {
+        right: -30px;
+        bottom: 80px;
+    }
+
+    .megatron2 {
+        left: -30px;
+        bottom: 100px;
+    }
+
+    .counter-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .photos {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .title {
+        font-size: 50px;
+    }
+
+}
+
+@media(max-width:360px) {
+
+    .robot {
+        width: 75px;
+    }
+
+    .photos {
+        gap: 8px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     OPTIMUS Y MEGATRON
+========================= -->
+
+<img src="optimus.png" class="robot optimus1" alt="Optimus">
+<img src="optimus.png" class="robot optimus2" alt="Optimus">
+<img src="megatron.png" class="robot megatron1" alt="Megatron">
+<img src="megatron.png" class="robot megatron2" alt="Megatron">
+
+
+
+<!-- =========================
+     FONDO
+========================= -->
+
+<div class="background">
+    <div class="floating" style="left:5%;animation-delay:0s;">💗</div>
+    <div class="floating" style="left:18%;animation-delay:3s;">🌻</div>
+    <div class="floating" style="left:38%;animation-delay:6s;">💕</div>
+    <div class="floating" style="left:60%;animation-delay:2s;">🌻</div>
+    <div class="floating" style="left:82%;animation-delay:5s;">💖</div>
+    <div class="floating" style="left:92%;animation-delay:8s;">🌻</div>
+</div>
+
+
+
+<!-- =========================
+     CONTENIDO
+========================= -->
+
+<div class="container">
+
+
+    <div class="main-heart">💗</div>
+
+    <div class="title">TeAmodoro</div>
+
+    <div class="subtitle">
+        Nosotros esos amor pero sin pelear🤭🤭🤭 💕
+    </div>
+
+    <div class="line"></div>
+
+
+    <!-- BOTÓN CELEBRACIÓN -->
+    <button class="button" onclick="celebrar()">
+        💖 4 Meses Juntos 💖
+    </button>
+
+
+    <!-- BOTÓN MÚSICA -->
+    <br>
+    <button class="button" onclick="toggleMusic()" id="musicButton">
+        🎵 Reproducir nuestra canción
+    </button>
+
+    <!-- Audio (se elige la canción al azar al cargar) -->
+    <audio id="music" loop></audio>
+
+
+
+    <!-- =========================
+         CONTADOR
+    ========================= -->
+
+    <div class="counter">
+        <div class="counter-title">
+            💕 Tiempo que llevamos amándonos 💕
+        </div>
+
+        <div class="counter-grid">
+            <div class="time-box">
+                <span class="number" id="days">0</span>
+                <span class="label">Días</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="hours">0</span>
+                <span class="label">Horas</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="minutes">0</span>
+                <span class="label">Minutos</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="seconds">0</span>
+                <span class="label">Segundos</span>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- =========================
+         CARTA (pega aquí tu carta larga)
+    ========================= -->
+
+    <div class="letter">
+
+        <h2>💌 Una cartita para mi niño 💌</h2>
+
+        <!-- ↓↓↓ AQUÍ PEGA TU CARTA LARGA ↓↓↓ -->
+
+        <p>
+            Mi Alesito, hoy cumplimos
+            <b>4 meses juntos</b> y todavía
+            me cuesta creer todo lo bonito
+            que hemos vivido en este tiempo🫂🫂🫂🫂🫂🫂
+        </p>
+
+        <p>
+            Gracias por cada momento,
+            cada conversación, cada risa, cada llamada,
+            cada beso, cada abrazo
+            y cada pequeño detalle que has
+            compartido conmigo 🫂🫂💕🫂💕💕🫂
+        </p>
+
+        <p>
+            Me haces sentir tan especial, tan
+            querida, tan protegida, tan respetada
+            y tan segura contigo mi cielo 💕💕💕
+            y quiero seguir creando recuerdos
+            contigo, descubriendo nuevos
+            lugares y riéndonos de nuestras
+            tonterías siempre a tu lado mi vida 💛💛💛💛
+        </p>
+
+        <p>
+            Estos cuatro meses son solamente
+            una pequeña parte de todo lo que
+            nos queda por vivir juntos mi niño 💛💕
+        </p>
+
+        <p>
+            Te amodoro muchísimo mi Alesito 💛
+            Gracias por dejarme ser tu Nessita 🌻
+        </p>
+
+        <!-- ↑↑↑ FIN DE LA CARTA ↑↑↑ -->
+
+        <div class="signature">
+            Con todo mi amor,<br>
+            Tu Nessita ♡
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         GALERÍA
+    ========================= -->
+
+    <div class="gallery">
+        <h2>📸 Nuestros 11 momentos 💕</h2>
+        <p>11 fotos, que para mi significan el mundo 🌻</p>
+
+        <div class="photos">
+            <div class="photo"><img src="foto1.jpg" alt="Foto 1"></div>
+            <div class="photo"><img src="foto2.jpg" alt="Foto 2"></div>
+            <div class="photo"><img src="foto3.jpg" alt="Foto 3"></div>
+            <div class="photo"><img src="foto4.jpg" alt="Foto 4"></div>
+            <div class="photo"><img src="foto5.jpg" alt="Foto 5"></div>
+            <div class="photo"><img src="foto6.jpg" alt="Foto 6"></div>
+            <div class="photo"><img src="foto7.jpg" alt="Foto 7"></div>
+            <div class="photo"><img src="foto8.jpg" alt="Foto 8"></div>
+            <div class="photo"><img src="foto9.jpg" alt="Foto 9"></div>
+            <div class="photo"><img src="foto10.jpg" alt="Foto 10"></div>
+            <div class="photo"><img src="foto11.jpg" alt="Foto 11"></div>
+        </div>
+    </div>
+
+
+
+    <!-- =========================
+         FINAL
+    ========================= -->
+
+    <div class="message">
+        💗 Siempre tuya siempre mio 💗
+        <br><br>
+        Gracias por estos 4 meses mi pastelito 💛🌻
+    </div>
+
+    <div class="footer">
+        Hecho con mucho amor por Princesita ♡
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================
+   FECHA DE INICIO
+========================= */
+const fechaInicio = new Date("2026-06-20T00:00:00");
+
+
+/* =========================
+   CONTADOR
+========================= */
+function actualizarContador() {
+    const ahora = new Date();
+    const diferencia = ahora - fechaInicio;
+    const totalSegundos = Math.floor(diferencia / 1000);
+
+    const dias = Math.floor(totalSegundos / 86400);
+    const horas = Math.floor((totalSegundos % 86400) / 3600);
+    const minutos = Math.floor((totalSegundos % 3600) / 60);
+    const segundos = totalSegundos % 60;
+
+    document.getElementById("days").textContent = dias;
+    document.getElementById("hours").textContent = horas;
+    document.getElementById("minutes").textContent = minutos;
+    document.getElementById("seconds").textContent = segundos;
+}
+
+setInterval(actualizarContador, 1000);
+actualizarContador();
+
+
+
+/* =========================
+   MÚSICA ALEATORIA
+========================= */
+
+// Las 3 canciones (pon los nombres exactos de tus archivos)
+const canciones = [
+    "join-me-in-death.mp3",   // HIM
+    "bound-2.mp3",            // Kanye West
+    "buddy-holly.mp3"         // Weezer
+];
+
+const music = document.getElementById("music");
+const musicButton = document.getElementById("musicButton");
+
+// Elegir una canción al azar al cargar la página
+const cancionAleatoria = canciones[Math.floor(Math.random() * canciones.length)];
+music.src = cancionAleatoria;
+
+// (Opcional) mostrar el nombre de la canción en la consola
+console.log("Canción de esta visita:", cancionAleatoria);
+
+
+function toggleMusic() {
+    if (music.paused) {
+        music.play();
+        musicButton.textContent = "⏸️ Pausar nuestra canción";
+    } else {
+        music.pause();
+        musicButton.textContent = "🎵 Reproducir nuestra canción";
+    }
+}
+
+
+
+/* =========================
+   CELEBRACIÓN
+========================= */
+function celebrar() {
+    for (let i = 0; i < 30; i++) {
+        const elemento = document.createElement("div");
+        elemento.className = "celebration";
+        elemento.textContent = Math.random() > .5 ? "💗" : "🌻";
+        elemento.style.left = Math.random() * 100 + "vw";
+        elemento.style.top = "70vh";
+
+        document.body.appendChild(elemento);
+
+        const animacion = elemento.animate(
+            [
+                {
+                    transform: "translateY(0) scale(1) rotate(0deg)",
+                    opacity: 1
+                },
+                {
+                    transform: "translateY(-550px) scale(1.5) rotate(360deg)",
+                    opacity: 0
+                }
+            ],
+            {
+                duration: 1800 + Math.random() * 1500,
+                easing: "ease-out"
+            }
+        );
+
+        animacion.onfinish = () => elemento.remove();
+    }
+
+    // Si la música está pausada, la reproduce
+    if (music.paused) {
+        music.play().catch(() => {});
+        musicButton.textContent = "⏸️ Pausar nuestra canción";
+    }
+}
+
+</script>
+
+</body>
+</html>
