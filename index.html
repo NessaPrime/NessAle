@@ -431,7 +431,26 @@ body {
     }
 
 }
+/* Efecto al hacer clic */
+.click-emoji {
+position: fixed;
+pointer-events: none;
+z-index: 9999;
+font-size: 28px;
+user-select: none;
+animation: flotarArriba 1.4s ease-out forwards;
+}
 
+@keyframes flotarArriba {
+0% {
+transform: translateY(0) scale(1) rotate(0deg);
+opacity: 1;
+}
+100% {
+transform: translateY(-180px) scale(1.4) rotate(25deg);
+opacity: 0;
+}
+}
 </style>
 </head>
 
@@ -743,7 +762,31 @@ function celebrar() {
         musicButton.textContent = "⏸️ Pausar nuestra canción";
     }
 }
+/* =========================
+EFECTO AL HACER CLIC
+========================= */
 
+const emojisClick = ["💗", "💖", "💛", "🌻", "⭐", "✨", "💕"];
+
+document.addEventListener("click", function(e) {
+// No crear emojis si se hace clic en un botón
+if (e.target.tagName === "BUTTON") return;
+
+const emoji = document.createElement("div");
+emoji.className = "click-emoji";
+emoji.textContent = emojisClick[Math.floor(Math.random() * emojisClick.length)];
+
+// Posición donde se hizo clic
+emoji.style.left = e.clientX + "px";
+emoji.style.top = e.clientY + "px";
+
+document.body.appendChild(emoji);
+
+// Eliminar el emoji después de la animación
+setTimeout(() => {
+emoji.remove();
+}, 1400);
+});
 </script>
 
 </body>
